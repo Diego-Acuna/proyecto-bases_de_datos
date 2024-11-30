@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Menú de Consultas</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Menú de Consultas sobre Titulados de Educación Superior 2023</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Realizar consulta</button>
+    </form>
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    {% if resultados %}
+        <h2>Resultados:</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Cat. Periodo</th>
+                    <th>Año de ingreso a la carrera </th>
+                    <th>Género</th>
+                    <th>Rango Edad</th>
+                    <th>Universidad</th>
+                    <th>Carrera</th>
+                    <th>Nivel Carrera</th>
+                    <th>Duración de la carrera (en semestres)</tr>
+                </tr>
+            </thead>
+            <tbody>
+                {% for resultado in resultados %}
+                    <tr>
+                        <td>{{ resultado.cat_periodo }}</td>
+                        <td>{{ resultado.anio_ing_carr_ori}}</td>
+                        <td>{{ resultado.gen_alu }}</td>
+                        <td>{{ resultado.rango_edad }}</td>
+                        <td>{{ resultado.nomb_inst }}</td>
+                        <td>{{ resultado.nomb_carrera }}</td>
+                        <td>{{ resultado.nivel_global }}</td>
+                        <td>{{ resultado.dur_total_carr}}
+
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No se han encontrado resultados para la consulta.</p>
+    {% endif %}
+</body>
+</html>
+
+
+
+
+
+
+
